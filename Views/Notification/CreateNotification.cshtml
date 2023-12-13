@@ -1,0 +1,13 @@
+<!-- CreateNotification.cshtml -->
+@model NotificationViewModel
+
+<h2>Create New Notification</h2>
+
+<form asp-controller="Notification" asp-action="CreateNotification" method="post">
+    <div class="form-group">
+        <label asp-for="Content">Notification Content:</label>
+        <input asp-for="Content" class="form-control" />
+        <span asp-validation-for="Content" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>

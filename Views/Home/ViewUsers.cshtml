@@ -1,0 +1,32 @@
+@model List<Lib2.Models.User>
+
+<h1>Danh sách người dùng</h1>
+
+@if (Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Tên người dùng</th>
+                <th>PassWord</th>
+                <th>Email</th>
+                <!-- Thêm các cột khác nếu cần -->
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>@user.Name</td>
+                    <td>@user.Password</td>
+                    <td>@user.Email</td>
+                    <!-- Thêm dữ liệu cho các cột khác nếu cần -->
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Không có người dùng nào.</p>
+}

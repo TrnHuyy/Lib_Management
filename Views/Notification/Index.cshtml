@@ -1,0 +1,22 @@
+@model List<Notification>
+
+<h2>Notifications</h2>
+
+@if (Model.Any())
+{
+    <ul>
+        @foreach (var notification in Model)
+        {
+            <li>@notification.Content</li>
+            <li>@notification.CreatedAt</li>
+        }
+    </ul>
+}
+else
+{
+    <p>No notifications available.</p>
+}
+
+<div>
+    <a asp-action="CreateNotification" asp-controller="Notification">Tạo thông báo</a>
+</div> 

@@ -1,0 +1,44 @@
+@model List<Lib2.Models.Loan>
+
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@if (Model != null && Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>BookTitle</th>
+                <th>UserName</th>
+                <th>LoanDate</th>
+                <th>ReturnDate</th>
+                <!-- Thêm các cột khác nếu cần -->
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var loan in Model)
+            {
+                <tr>
+                    <td>@loan.Id</td>
+                    <td>@loan.BookId</td>
+                    <td>@loan.UserId</td>
+                    <td>@loan.LoanDate</td>
+                    <td>@loan.ReturnDate</td>
+                    <!-- Hiển thị các thông tin khác của mượn sách -->
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No loans found.</p>
+}
+
+<div>
+    <a asp-action="Create" asp-controller="Loan">Mượn Sách</a>
+</div> 
