@@ -8,7 +8,7 @@ namespace Lib2.Models;
 public class Loan
 {
     public int Id { get; set; }
-    public int UserId { get; set; }
+    public int? UserId { get; set; }
     public int BookId { get; set; }
 
     // DueDate: ngày sách mượn phải được trả
@@ -17,15 +17,21 @@ public class Loan
     public DateTime LoanDate { get; set; }
     public DateTime DueDate { get; set; }
     public DateTime? ReturnDate { get; set; }
-    private readonly LibraryContext _context;
-
-    public Loan(){
-        
-    }
+    public User User { get; set; }
+    public Book Book { get; set; }
+    
     //khởi tạo trạng thái mượn sách
-    public Loan(LibraryContext context)
+    public Loan()
     {
-        _context = context;
+        LoanDate = DateTime.Now;
+        DueDate = DateTime.Now.AddDays(14); // Mỗi cuốn sách được mượn trong 14 ngày
+        ReturnDate = null;
+    }
+
+    public Loan(int? userId, int bookId)
+    {
+        UserId = userId;
+        BookId = bookId;
         LoanDate = DateTime.Now;
         DueDate = DateTime.Now.AddDays(14); // Mỗi cuốn sách được mượn trong 14 ngày
         ReturnDate = null;

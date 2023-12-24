@@ -22,6 +22,12 @@
                     <td>@book.Author</td>
                     <td>@book.Category</td>
                     <td>@book.IsBorrowed</td>
+                    <td>
+                        <form asp-action="CreateLoan" asp-controller="Loan" method="post">
+                            <input type="hidden" name="bookId" value="@book.Id" />
+                            <button type="submit">Mượn</button>
+                        </form>
+                    </td>
                     <!-- Thêm dữ liệu cho các cột khác nếu cần -->
                 </tr>
             }

@@ -4,18 +4,31 @@
 
 @if (Model.Any())
 {
-    <ul>
-        @foreach (var notification in Model)
-        {
-            <li>@notification.Content</li>
-            <li>@notification.CreatedAt</li>
-        }
-    </ul>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Content</th>
+                <th>Create Date</th>
+                <!-- Thêm các cột khác nếu cần -->
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var noti in Model)
+            {
+                <tr>
+                    <td>@noti.Content</td>
+                    <td>@noti.CreatedAt</td>
+                    <!-- Thêm dữ liệu cho các cột khác nếu cần -->
+                </tr>
+            }
+        </tbody>
+    </table>
 }
 else
 {
-    <p>No notifications available.</p>
-}
+    <p>Không có thong bao</p>
+} 
+
 
 <div>
     <a asp-action="CreateNotification" asp-controller="Notification">Tạo thông báo</a>

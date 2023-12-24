@@ -24,10 +24,28 @@
             {
                 <tr>
                     <td>@loan.Id</td>
-                    <td>@loan.BookId</td>
-                    <td>@loan.UserId</td>
+                    <td>@loan.Book.Title</td>
+                    <td>@loan.User.Name</td>
                     <td>@loan.LoanDate</td>
-                    <td>@loan.ReturnDate</td>
+                     <td>
+                    @if (loan.ReturnDate.HasValue)
+                    {
+                        @loan.ReturnDate.Value
+                    }
+                    else
+                    {
+                        <form asp-action="UpdateReturnDate" asp-controller="Loan" method="post">
+                            <input type="hidden" name="loanId" value="@loan.Id" />
+                            <button type="submit">Cập Nhật Ngày Trả</button>
+                        </form>
+                    }
+                </td>
+                <td>
+                    <form asp-action="DeleteLoan" asp-controller="Loan" method="post">
+                        <input type="hidden" name="loanId" value="@loan.Id" />
+                        <button type="submit">Xóa Mượn</button>
+                    </form>
+                </td>
                     <!-- Hiển thị các thông tin khác của mượn sách -->
                 </tr>
             }

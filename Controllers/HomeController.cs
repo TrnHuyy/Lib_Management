@@ -23,8 +23,79 @@ public class HomeController : Controller
 
     public IActionResult ViewUsers()
     {
+        var isLibrarian = HttpContext.Session.GetInt32("isLibrarian");
+        if(isLibrarian == 1)
+        {
         var users = _context.Users.ToList();
         return View(users);
+        }
+        else
+        {
+            return RedirectToAction("Error");
+        }
+    }
+
+    [HttpGet]
+    public IActionResult Profile()
+    {
+        var userId = HttpContext.Session.GetInt32("UserId");
+        if( userId == null)
+        {
+            return RedirectToAction("Login", "Resigter");
+        }
+        var user = _context.Users.FirstOrDefault(u => u.Id == userId);
+        if(user == null)
+        {
+            return BadRequest("ko tim thay nguoi dung");
+        }
+
+        return View(user);
+    }
+
+    [HttpGet]
+    public IActionResult ChangeName()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public IActionResult ChangeName([FromForm]string name)
+    {
+        var userId = HttpContext.Session.GetInt32("UserId");
+        if(userId == null)
+        {
+            return RedirectToAction("Login", "Resigter");
+        }
+        else{
+            var user = _context.Users.FirstOrDefault(u => u.Id == userId);
+            user.ChangeName(name);
+            _context.SaveChanges();
+            return RedirectToAction("Profile");
+        }
+    }
+
+    [HttpGet]
+    public IActionResult ChangePass()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public IActionResult ChangePass([FromForm]string oldPass, [FromForm]string newPass)
+    {
+        var userId = HttpContext.Session.GetInt32("UserId");
+        if(userId == null)
+        {
+            return RedirectToAction("Login", "Resigter");
+        }
+        var user = _context.Users.FirstOrDefault(u => u.Id == userId);
+        if(user.Password != oldPass)
+        {
+            return BadRequest("Sai mat khau cu");
+        }
+        user.ChangePass(newPass);
+        _context.SaveChanges();
+        return RedirectToAction("Profile");
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

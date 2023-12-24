@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Lib2.Models;
+using Microsoft.EntityFrameworkCore.SqlServer.Infrastructure.Internal;
 
 namespace Lib2
 {
@@ -20,30 +21,53 @@ namespace Lib2
 
         public void ConfigureServices(IServiceCollection services)
         {   
-            // // Dịch vụ Identify
-            // services.AddIdentity<User, IdentityRole>()
-            //     .AddEntityFrameworkStores<LibraryContext>()
-            //     .AddDefaultTokenProviders();
+
+            services.AddDistributedMemoryCache();
+            services.AddSession();
+            services.AddHttpContextAccessor();
+
 
             // Thêm controller
             services.AddControllersWithViews();
 
             services.AddDbContext<LibraryContext>(options =>
             {
-                options.UseSqlServer(_configuration.GetConnectionString("DefaultConnection"));
+                options.UseSqlServer(_configuration.GetConnectionString("DefaultConnection"),
+                sqlServerOptionsAction: sqlOptions => 
+                {
+                    sqlOptions.EnableRetryOnFailure();
+                }
+                );
             });
 
+            // Tạo dữ liệu mặc định 
             var context = (LibraryContext)services.BuildServiceProvider().GetRequiredService(typeof(LibraryContext));
-            var book = new Book(
-                "Tri tue do thai", "Eran Katz", "novel" , false, "~/CODE/Lib2/BookContent/tri-tue-do-thai.txt"
-            );
-            context.Books.Add(book);
+            if(context.Books.Count() == 0)
+            {
+                var books = new List<Book>()
+                {
+                    new Book("Tri tue do thai", "Eran Katz", "novel" , 0, "~/CODE/Lib2/BookContent/tri-tue-do-thai.txt"),
+                    new Book("Cay cam ngot cua toi", "Jose Mauro De Vasconcelos", "novel" , 0, "~/CODE/Lib2/BookContent/cay-cam-ngot-cua-toi.txt")
+                };
+            context.Books.AddRange(books);
             context.SaveChanges();
-            var user = new User(
-                "Jane", "Jane123", "janesmith@gmail.com"
-            );
-            context.Users.Add(user);
-            context.SaveChanges();
+            }
+            if (context.Users.Count() == 0)
+            {
+                var users = new List<User>()
+                {
+                    new User("Jane","janesmith@gmail.com", "Jane123"),
+                    new User("Alice", "aliceinwonderland@gmail.com", "Alice456")
+                };
+                context.Users.AddRange(users);
+                context.SaveChanges();
+            }
+            if(context.Librarians.Count() == 0)
+            {
+                var librarian = new Librarian("aliceinwonderland@gmail.com","Alice456");
+                context.Librarians.Add(librarian);
+                context.SaveChanges();
+            }
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -63,12 +87,14 @@ namespace Lib2
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseCookiePolicy();
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Resigter}/{action=Index}");
+                    pattern: "{controller=Resigter}/{action=Login}");
             });
         }
     }

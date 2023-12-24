@@ -4,15 +4,11 @@
 <main>
     <div class="page-section features" style="margin": 150px 0px">
         <div class="container">
-            <h4>Add User</h4>
-            <form asp-action="Index" asp-controller="Resigter" method="post">
+            <h4>Resigter</h4>
+            <form asp-action="Resign" asp-controller="Resigter" method="post">
                 <div class="form-group">
                     <label for="email">Email address:</label>
                     <input name="email" type="email" class="form-control" id="email">
-                </div>
-                <div class="form-group">
-                    <label for="username">User Name:</label>
-                    <input name="name" type="text" class="form-control" id="name">
                 </div>
                 <div class="form-group">
                     <label for="pwd">Password:</label>

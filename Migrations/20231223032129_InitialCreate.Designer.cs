@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Lib2.Migrations
 {
     [DbContext(typeof(LibraryContext))]
-    [Migration("20231213054936_Initial")]
-    partial class Initial
+    [Migration("20231223032129_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,8 +40,8 @@ namespace Lib2.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsBorrowed")
-                        .HasColumnType("bit");
+                    b.Property<int>("IsBorrowed")
+                        .HasColumnType("int");
 
                     b.Property<string>("Path")
                         .IsRequired()
@@ -54,6 +54,27 @@ namespace Lib2.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Books");
+                });
+
+            modelBuilder.Entity("Lib2.Models.Librarian", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Librarians");
                 });
 
             modelBuilder.Entity("Lib2.Models.Loan", b =>
@@ -70,6 +91,9 @@ namespace Lib2.Migrations
                     b.Property<DateTime>("DueDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("LibrarianId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("LoanDate")
                         .HasColumnType("datetime2");
 
@@ -80,6 +104,12 @@ namespace Lib2.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BookId");
+
+                    b.HasIndex("LibrarianId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Loans");
                 });
@@ -106,18 +136,15 @@ namespace Lib2.Migrations
 
             modelBuilder.Entity("Lib2.Models.User", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsLibrarian")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -130,6 +157,44 @@ namespace Lib2.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("Lib2.Models.Loan", b =>
+                {
+                    b.HasOne("Lib2.Models.Book", "Book")
+                        .WithMany("Loans")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Lib2.Models.Librarian", null)
+                        .WithMany("Loans")
+                        .HasForeignKey("LibrarianId");
+
+                    b.HasOne("Lib2.Models.User", "User")
+                        .WithMany("Loans")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Book");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Lib2.Models.Book", b =>
+                {
+                    b.Navigation("Loans");
+                });
+
+            modelBuilder.Entity("Lib2.Models.Librarian", b =>
+                {
+                    b.Navigation("Loans");
+                });
+
+            modelBuilder.Entity("Lib2.Models.User", b =>
+                {
+                    b.Navigation("Loans");
                 });
 #pragma warning restore 612, 618
         }

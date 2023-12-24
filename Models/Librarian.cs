@@ -8,11 +8,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Lib2.Models
 {
-    public class User
+    public class Librarian
     {
         [Key]
         public int Id { get; set; }
-        public string Name { get; set; }
+        //public string Name { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
         //public int IsLibrarian {get; set;}
@@ -20,35 +20,22 @@ namespace Lib2.Models
         // Danh sách các sách mà người dùng đã mượn
         public ICollection<Loan> Loans { get; set; }
 
-        public void ChangeName(string name)
-        {
-            Name =name;
-        }
-        public void ChangePass(string pass)
-        {
-            Password = pass;
-        }
-        public User()
+        // Constructor để khởi tạo danh sách mượn
+        // public User()
+        // {
+        //     Loans = new List<Loan>();
+        // }
+        public Librarian()
         {
             Id = 0;
-            Name = "";
             Password = "";
             Email = "";
-            //IsLibrarian = 0;
         }
-        public User(string name, string email, string pass)
+        public Librarian( string email, string pass)
         {
-            Name = name;
             Password = pass;
             Email = email;
-            //IsLibrarian = 0;
         }
-        public User( string name, string email, string pass, int isLibrarian)
-        {
-            Name = name;
-            Password = pass;
-            Email = email;
-            //IsLibrarian = isLibrarian;
-        }
+ 
     }
 }

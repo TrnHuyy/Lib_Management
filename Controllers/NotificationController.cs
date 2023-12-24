@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Lib2.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Server.IIS.Core;
 
 namespace Lib2.Controllers
 {
@@ -27,19 +28,25 @@ namespace Lib2.Controllers
         }
         public IActionResult Index()
         {
-            var notifications = GetNotifications(); // Lấy danh sách thông báo từ database hoặc nơi lưu trữ thông báo
+            // Lấy danh sách thông báo từ database hoặc nơi lưu trữ thông báo
+            var notifications = GetNotifications();
             return View(notifications);
         }
 
         [HttpGet]
         public IActionResult CreateNotification()
         {
+            
             return View();
         }
 
         [HttpPost]
         public IActionResult CreateNotification(string content)
         {
+            var isLibrarian = HttpContext.Session.GetInt32("isLibrarian");
+            Console.WriteLine("hello"+isLibrarian);
+            //if(isLibrarian == 1)
+            //{
             var newNotification = new Notification
             {
                 Content = content,
@@ -50,6 +57,10 @@ namespace Lib2.Controllers
             _context.SaveChanges();
 
             return RedirectToAction("Index", "Notification"); // Redirect về trang chủ sau khi thêm thông báo
+            //}
+            //else{
+             //   return RedirectToAction("Error");
+            //}
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

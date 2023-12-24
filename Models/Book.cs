@@ -15,9 +15,7 @@ namespace Lib2.Models
         public string Author { get; set; }
         public string Category { get; set;}
         public string Path { get; set; }
-        public bool IsBorrowed { get; set; }
-        
-        [NotMapped]
+        public int IsBorrowed { get; set; }
         public ICollection<Loan> Loans {get; set; }
 
         // Danh sách các mượn sách của cuốn sách
@@ -30,14 +28,22 @@ namespace Lib2.Models
         // {
         //     Loans = new List<Loan>();
         // }
+        public void Borrow()
+        {
+            IsBorrowed = 1;
+        }
+        public void UnBorrow()
+        {
+            IsBorrowed = 0;
+        }
         public Book()
         {
             Title = "";
             Author = "";
             Category = "";
-            IsBorrowed = false;
+            IsBorrowed = 0;
         }
-        public Book(string title, string author, string category, bool isborrowed, string path)
+        public Book(string title, string author, string category, int isborrowed, string path)
         {
             Title = title;
             Author = author;
