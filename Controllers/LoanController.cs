@@ -62,6 +62,7 @@ public class LoanController : Controller
     [HttpPost]
     public IActionResult CreateLoan([FromForm]int bookId)
     {
+        Console.WriteLine("new"+bookId);
         var userId = HttpContext.Session.GetInt32("UserId");
         var book = _context.Books.FirstOrDefault(b => b.Id == bookId);
         if(userId == null)
