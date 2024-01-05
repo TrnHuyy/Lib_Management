@@ -1,7 +1,7 @@
 @model List<Lib2.Models.Loan>
 
 @{
-    ViewBag.Title = "List";
+    ViewBag.Title = "Loan List";
 }
 
 <h2>@ViewBag.Title</h2>
@@ -24,29 +24,28 @@
             {
                 <tr>
                     <td>@loan.Id</td>
-                    <td>@loan.Book.Title</td>
-                    <td>@loan.User.Name</td>
+                    <td>@loan.BookId</td>
+                    <td>@loan.UserId</td>
                     <td>@loan.LoanDate</td>
-                    <td>@loan.ReturnDate</td>
-                     @* <td>
+                     <td>
                     @if (loan.ReturnDate.HasValue)
                     {
                         @loan.ReturnDate.Value
                     } 
                     else
                     {
-                         <form asp-action="UpdateReturnDate" asp-controller="Loan" method="post">
+                        <form asp-action="UpdateReturnDate" asp-controller="Loan" method="post">
                             <input type="hidden" name="loanId" value="@loan.Id" />
                             <button type="submit">Cập Nhật Ngày Trả</button>
-                        </form> 
+                        </form>
                     }
                 </td>
-                 <td>
+                <td>
                     <form asp-action="DeleteLoan" asp-controller="Loan" method="post">
                         <input type="hidden" name="loanId" value="@loan.Id" />
                         <button type="submit">Xóa Mượn</button>
                     </form>
-                </td>  *@
+                </td> 
                     <!-- Hiển thị các thông tin khác của mượn sách -->
                 </tr>
             }
@@ -57,7 +56,3 @@ else
 {
     <p>No loans found.</p>
 }
-
-<div>
-    <a asp-action="Index" asp-controller="Book">Tìm sách để mượn</a>
-</div> 

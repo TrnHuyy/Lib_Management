@@ -2,6 +2,7 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Lib2.Models;
 using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.EntityFrameworkCore;
 
 namespace Lib2.Controllers;
 
@@ -36,6 +37,26 @@ public class BookController : Controller
         }
 
         return RedirectToAction("Index");
+    }
+
+    [HttpGet]
+    public IActionResult ReadBook([FromForm]int bookId1)
+    {
+        var book = _context.Books.FirstOrDefault(b => b.Id == bookId1);
+        Console.WriteLine(bookId1);
+        var filePath = book.Path;
+        if(filePath == null)
+        {
+            return BadRequest("ko co noi dung");
+        }
+        if(System.IO.File.Exists(filePath))
+        {
+            string content = System.IO.File.ReadAllText(filePath);
+            return Content(content);
+        }
+        else{
+            return BadRequest("ko tim thay noi dung");
+        }
     }
 
 

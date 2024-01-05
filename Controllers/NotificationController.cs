@@ -44,23 +44,48 @@ namespace Lib2.Controllers
         public IActionResult CreateNotification(string content)
         {
             var isLibrarian = HttpContext.Session.GetInt32("isLibrarian");
-            Console.WriteLine("hello"+isLibrarian);
-            //if(isLibrarian == 1)
-            //{
-            var newNotification = new Notification
+            var userId = HttpContext.Session.GetInt32("UserId");
+            //Console.WriteLine("hello"+isLibrarian);
+            if(userId == null)
             {
-                Content = content,
-                CreatedAt = DateTime.UtcNow // Gán thời gian hiện tại
-            };
+                return RedirectToAction("Login", "Resigter");
+            }
+            if(isLibrarian == 0)
+            {
+               return BadRequest("ko phai thu thu nen ko co quyen tao thong bao");
+            }
+            else
+            {
+                var newNotification = new Notification
+                {
+                    Content = content,
+                    CreatedAt = DateTime.UtcNow // Gán thời gian hiện tại
+                };
+                _context.Notifications.Add(newNotification);
+                _context.SaveChanges();
+                return RedirectToAction("Index", "Notification"); // Redirect về trang chủ sau khi thêm thông báo
+            }
+        }
 
-            _context.Notifications.Add(newNotification);
-            _context.SaveChanges();
-
-            return RedirectToAction("Index", "Notification"); // Redirect về trang chủ sau khi thêm thông báo
-            //}
-            //else{
-             //   return RedirectToAction("Error");
-            //}
+        [HttpPost]
+        public IActionResult DeleteNotification([FromForm]int notiId)
+        {
+            var isLibrarian = HttpContext.Session.GetInt32("isLibrarian");
+            var userId = HttpContext.Session.GetInt32("UserId");
+            if(userId == null)
+            {
+                return RedirectToAction("Login", "Resigter");
+            }
+            if(isLibrarian == 0)
+            {
+                return BadRequest("ko phai thu thu");
+            }
+            else{
+                var noti = _context.Notifications.FirstOrDefault(n => n.Id == notiId);
+                _context.Notifications.Remove(noti);
+                _context.SaveChanges();
+                return RedirectToAction("Index", "Notification");
+            }
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

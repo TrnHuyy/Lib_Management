@@ -41,6 +41,12 @@
                             <button type="submit">Mượn</button>
                         </form>
                     </td>
+                    <td>
+                        <form asp-action="ReadBook" asp-controller="Book" method="get">
+                            <input type="hidden" name="bookId1" value="@book.Id" />
+                            <button type="submit">Đọc</button>
+                        </form>
+                    </td>
                     <!-- Thêm dữ liệu cho các cột khác nếu cần -->
                 </tr>
             }

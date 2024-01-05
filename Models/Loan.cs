@@ -35,5 +35,7 @@ public class Loan
         LoanDate = DateTime.Now;
         DueDate = DateTime.Now.AddDays(14); // Mỗi cuốn sách được mượn trong 14 ngày
         ReturnDate = null;
+        //User = _context.Users.FirstOrDefault(l => l.Id == userId);
+        //Book = _context.Books.FirstOrDefault(b => b.Id == bookId);
     }
 }

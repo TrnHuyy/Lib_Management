@@ -19,6 +19,12 @@
                     <td>@noti.Content</td>
                     <td>@noti.CreatedAt</td>
                     <!-- Thêm dữ liệu cho các cột khác nếu cần -->
+                    <td>
+                        <form asp-action="DeleteNotification" asp-controller="Notification" method="post">
+                            <input type="hidden" name="notiId" value="@noti.Id" />
+                            <button type="submit">Xóa Thông Báo</button>
+                        </form>
+                    </td>
                 </tr>
             }
         </tbody>

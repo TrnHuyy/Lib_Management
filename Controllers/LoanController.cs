@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace Lib2.Controllers;
 
@@ -43,37 +44,42 @@ public class LoanController : Controller
         return View();
     }
 
-    [HttpPost]
-    public ActionResult Create([FromForm]Loan loan)
-    {
-        if (ModelState.IsValid)
-        {
-            // Lưu thông tin mượn sách vào cơ sở dữ liệu
-            _context.Loans.Add(loan);
-            loan.Book.Borrow();
-            _context.SaveChanges();
-            return RedirectToAction("Index", "Loan"); // Chuyển hướng đến action Index của LoanController sau khi tạo mượn sách thành công
-        }
+    // [HttpPost]
+    // public ActionResult Create([FromForm]Loan loan)
+    // {
+    //     if (ModelState.IsValid)
+    //     {
+    //         // Lưu thông tin mượn sách vào cơ sở dữ liệu
+    //         _context.Loans.Add(loan);
+    //         loan.Book.Borrow();
+    //         _context.SaveChanges();
+    //         return RedirectToAction("Index", "Loan"); // Chuyển hướng đến action Index của LoanController sau khi tạo mượn sách thành công
+    //     }
 
-        return View(loan);
-    }
+    //     return View(loan);
+    // }
 
     [HttpPost]
     public IActionResult CreateLoan([FromForm]int bookId)
     {
         var userId = HttpContext.Session.GetInt32("UserId");
-        if(userId != null)
+        var book = _context.Books.FirstOrDefault(b => b.Id == bookId);
+        if(userId == null)
         {
-            var loan = new Loan(userId, bookId);
-            _context.Loans.Add(loan);
-            var book = _context.Books.FirstOrDefault(b => b.Id == bookId);
-            book.Borrow();
-            _context.SaveChanges();
-            return RedirectToAction("Index", "Loan");
+            return RedirectToAction("Login", "Resigter");
+        }
+        if(book.IsBorrowed == 1)
+        {
+            return BadRequest("sach da duoc muon");
         }
         else
         {
-            return RedirectToAction("Login", "Resigter");
+            var loan = new Loan(userId, bookId);
+            _context.Loans.Add(loan);
+            var book1 = _context.Books.FirstOrDefault(b => b.Id == bookId);
+            book1.Borrow();
+            _context.SaveChanges();
+            return RedirectToAction("Index", "Loan");
         }
     }
 
@@ -84,15 +90,18 @@ public class LoanController : Controller
         if(loan == null)
         {
             return NotFound();
-        }        
-        if(loan.ReturnDate != null)
+        }
+        if(loan.ReturnDate == null && loan != null)
         {
+            loan.ReturnDate = DateTime.Now;
+            var book = _context.Books.FirstOrDefault(b => b.Id == loan.BookId);
+            book.UnBorrow();
+            _context.SaveChanges();
+            return RedirectToAction("ViewAllLoan");
+        }
+        else{
             return BadRequest("sach da duoc tra");
         }
-        loan.ReturnDate = DateTime.Now;
-        loan.Book.UnBorrow();
-        _context.SaveChanges();
-        return RedirectToAction("Index");
     }
 
     [HttpPost]
@@ -102,11 +111,32 @@ public class LoanController : Controller
         if(loan == null)
         {
             return NotFound();
-        }   
+        }
+        //loan.Book.UnBorrow();
         _context.Loans.Remove(loan);
         _context.SaveChanges();
 
-        return RedirectToAction("Index");
+        return RedirectToAction("ViewAllLoan");
+    }
+
+    [HttpGet]
+    public IActionResult ViewAllLoan()
+    {
+        var userId = HttpContext.Session.GetInt32("UserId");
+        var isLibrarian = HttpContext.Session.GetInt32("isLibrarian");
+        if(userId == null)
+        {
+            return RedirectToAction("Login", "Resigter");
+        }
+        if(isLibrarian == 0)
+        {
+            return BadRequest("ko phai thu thu");
+        }
+        else{
+            var loans = _context.Loans.ToList();
+            //var viewModel = new ViewAllLoanViewModel(loans);
+            return View(loans);
+        }
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
