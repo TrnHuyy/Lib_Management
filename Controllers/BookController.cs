@@ -39,11 +39,11 @@ public class BookController : Controller
         return RedirectToAction("Index");
     }
 
-    [HttpGet]
-    public IActionResult ReadBook([FromForm]int bookId1)
+    [HttpPost]
+    public IActionResult ReadBook([FromForm]int BookId)
     {
-        var book = _context.Books.FirstOrDefault(b => b.Id == bookId1);
-        Console.WriteLine(bookId1);
+        var book = _context.Books.FirstOrDefault(b => b.Id == BookId);
+        Console.WriteLine(BookId);
         var filePath = book.Path;
         if(filePath == null)
         {

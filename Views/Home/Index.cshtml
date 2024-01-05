@@ -24,6 +24,7 @@
                 <th>Author</th>
                 <th>Category</th>
                 <th>IsBorrowed</th>
+                <th>Id</th>
                 <!-- Thêm các cột khác nếu cần -->
             </tr>
         </thead>
@@ -35,6 +36,7 @@
                     <td>@book.Author</td>
                     <td>@book.Category</td>
                     <td>@book.IsBorrowed</td>
+                    <td>@book.Id</td>
                     <td>
                         <form asp-action="CreateLoan" asp-controller="Loan" method="post">
                             <input type="hidden" name="bookId" value="@book.Id" />
@@ -42,8 +44,8 @@
                         </form>
                     </td>
                     <td>
-                        <form asp-action="ReadBook" asp-controller="Book" method="get">
-                            <input type="hidden" name="bookId1" value="@book.Id" />
+                        <form asp-action="ReadBook" asp-controller="Book" method="post">
+                            <input type="hidden" name="BookId" value="@book.Id" />
                             <button type="submit">Đọc</button>
                         </form>
                     </td>
