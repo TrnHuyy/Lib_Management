@@ -1,0 +1,67 @@
+@* @{
+    ViewBag.Title= "Edit";
+}
+<main>
+    <div class="page-section features" style="margin": 150px 0px">
+        <div class="container">
+            <h4>Edit Books</h4>
+            <form asp-action="ChangeTitle" asp-controller="Book" >
+                <input type="hidden" name="id" value="@ViewBag.Id" />
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input name="title" type="text" class="form-control" id="title">
+                </div>
+                <div class="form-group">
+                    <label for="author">Author</label>
+                    <input name="author" type="text" class="form-control" id="author">
+                </div>
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <input name="category" type="text" class="form-control" id="category">
+                </div>
+                <button type="submit" class="btn btn-default">Change</button>
+            </form>
+        </div>
+    </div>
+</main> *@
+
+@{
+    ViewBag.Title= "Edit";
+}
+<main>
+    <div class="page-section features" style="margin": 150px 0px">
+        <div class="container">
+            <h4>Edit Books</h4>
+
+            <h3>Title</h3>
+            <form asp-action="ChangeTitle" asp-controller="Book" method="post">
+                <input type="hidden" name="id" value="@ViewBag.Id" />
+                <div class="form-group">
+                    <label for="title">Title: </label>
+                    <input name="title" type="text" class="form-control" id="title">
+                </div>
+                <button type="submit" >Change Title</button>
+            </form>
+
+            <h3>Author</h3>
+            <form asp-action="ChangeAuthor" asp-controller="Book" method="post">
+                <input type="hidden" name="id" value="@ViewBag.Id" />
+                <div class="form-group">
+                    <label for="author">Author: </label>
+                    <input name="author" type="text" class="form-control" id="author">
+                </div>
+                <button type="submit" >Change Author</button>
+            </form>
+
+            <h3>Category</h3>
+            <form asp-action="ChangeCategory" asp-controller="Book" method="post">
+                <input type="hidden" name="id" value="@ViewBag.Id" />
+                <div class="form-group">
+                    <label for="category">Category: </label>
+                    <input name="category" type="text" class="form-control" id="category">
+                </div>
+                <button type="submit" >Change Category</button>
+            </form>
+        </div>
+    </div>
+</main>

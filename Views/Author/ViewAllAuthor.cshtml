@@ -1,0 +1,35 @@
+@model List<Lib2.Models.Author>
+
+<h2>All Authors</h2>
+
+@if(Model.Any())
+{
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Birthdate</th>
+            <th>More</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var author in Model)
+        {
+            <tr>
+                <td>@author.Name</td>
+                <td>@author.Birthdate</td>
+                <td>
+                    <form asp-action="ViewAuthor" asp-controller="Author" method="post">
+                        <input type="hidden" name="searchName" value="@author.Name" />
+                        <button type="submit">Details</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+}
+else
+{
+    <p>No author.</p>
+}

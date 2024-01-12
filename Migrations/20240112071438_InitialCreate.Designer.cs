@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Lib2.Migrations
 {
     [DbContext(typeof(LibraryContext))]
-    [Migration("20231223032129_InitialCreate")]
+    [Migration("20240112071438_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -24,6 +24,30 @@ namespace Lib2.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Lib2.Models.Author", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("Birthdate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Path")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Authors");
+                });
+
             modelBuilder.Entity("Lib2.Models.Book", b =>
                 {
                     b.Property<int>("Id")
@@ -35,6 +59,9 @@ namespace Lib2.Migrations
                     b.Property<string>("Author")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("AuthorId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Category")
                         .IsRequired()
@@ -54,6 +81,47 @@ namespace Lib2.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Books");
+                });
+
+            modelBuilder.Entity("Lib2.Models.Comment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BookId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Comments");
+                });
+
+            modelBuilder.Entity("Lib2.Models.Favorite", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BookId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId", "BookId");
+
+                    b.HasIndex("BookId");
+
+                    b.ToTable("Favorites");
                 });
 
             modelBuilder.Entity("Lib2.Models.Librarian", b =>
@@ -100,7 +168,13 @@ namespace Lib2.Migrations
                     b.Property<DateTime?>("ReturnDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("UserId")
+                    b.Property<DateTime>("ScheduleLoanDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ScheduleReturnDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -142,6 +216,9 @@ namespace Lib2.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<long>("Debt")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -159,6 +236,25 @@ namespace Lib2.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("Lib2.Models.Favorite", b =>
+                {
+                    b.HasOne("Lib2.Models.Book", "book")
+                        .WithMany("Favorites")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Lib2.Models.User", "user")
+                        .WithMany("Favorites")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("book");
+
+                    b.Navigation("user");
+                });
+
             modelBuilder.Entity("Lib2.Models.Loan", b =>
                 {
                     b.HasOne("Lib2.Models.Book", "Book")
@@ -173,9 +269,7 @@ namespace Lib2.Migrations
 
                     b.HasOne("Lib2.Models.User", "User")
                         .WithMany("Loans")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Book");
 
@@ -184,6 +278,8 @@ namespace Lib2.Migrations
 
             modelBuilder.Entity("Lib2.Models.Book", b =>
                 {
+                    b.Navigation("Favorites");
+
                     b.Navigation("Loans");
                 });
 
@@ -194,6 +290,8 @@ namespace Lib2.Migrations
 
             modelBuilder.Entity("Lib2.Models.User", b =>
                 {
+                    b.Navigation("Favorites");
+
                     b.Navigation("Loans");
                 });
 #pragma warning restore 612, 618

@@ -12,11 +12,15 @@ public class Loan
     public int BookId { get; set; }
 
     // DueDate: ngày sách mượn phải được trả
-    // LoanDate: ngày mượn
+    // ScheduleLoanDate: ngày đến cửa hàng mượn thực tế
+    // LoanDate :Ngày đặt mượn trên web
     // ReturnDate: ngày trả thực tế - null nếu chưa trả
+    // ScheduleReturnDate: ngày đặt trả trên web
     public DateTime LoanDate { get; set; }
     public DateTime DueDate { get; set; }
     public DateTime? ReturnDate { get; set; }
+    public DateTime ScheduleLoanDate {get; set;}
+    public DateTime ScheduleReturnDate {get; set;}
     public User User { get; set; }
     public Book Book { get; set; }
     

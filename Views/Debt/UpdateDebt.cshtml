@@ -1,0 +1,21 @@
+@{
+    ViewBag.Title= "Update Debt";
+}
+<main>
+    <div class="page-section features" style="margin": 150px 0px">
+        <div class="container">
+            <h4>Update Debt</h4>
+            <form asp-action="UpdateDebt" asp-controller="Debt" >
+                <div class="form-group">
+                    <label for="userid">Id:</label>
+                    <input name="userid" type="number" class="form-control" id="userid">
+                </div>
+                <div class="form-group">
+                    <label for="debt">New Debt:</label>
+                    <input name="debt" type="number" class="form-control" id="debt">
+                </div>
+                <button type="submit" class="btn btn-default">Update</button>
+            </form>
+        </div>
+    </div>
+</main>

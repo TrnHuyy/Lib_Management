@@ -1,30 +1,25 @@
 ﻿@{
-    ViewData["Title"] = "Trang chủ";
+    ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Trang Chủ Của Ứng Dụng</h1>
+    <h1 class="display-4">Home Page</h1>
 </div> 
 
-@* <div>
-    <a asp-action="Index" asp-controller="Resigter">Đăng Nhập</a>
-    <!-- Đường dẫn đến Controller Resigter và Action Index -->
-</div>  *@
+@* @model List<Lib2.Models.Book>
 
-@model List<Lib2.Models.Book>
-
-<h1>Danh sách sách</h1>
+<h1>Book Lists</h1>
 
 @if (Model.Any())
 {
     <table class="table">
         <thead>
             <tr>
+                <th>Id</th>
                 <th>Title</th>
                 <th>Author</th>
                 <th>Category</th>
                 <th>IsBorrowed</th>
-                <th>Id</th>
                 <!-- Thêm các cột khác nếu cần -->
             </tr>
         </thead>
@@ -32,24 +27,17 @@
             @foreach (var book in Model)
             {
                 <tr>
+                    <td>@book.Id</td>
                     <td>@book.Title</td>
                     <td>@book.Author</td>
                     <td>@book.Category</td>
                     <td>@book.IsBorrowed</td>
-                    <td>@book.Id</td>
                     <td>
-                        <form asp-action="CreateLoan" asp-controller="Loan" method="post">
+                        <form asp-action="Details" asp-controller="Book" method="post">
                             <input type="hidden" name="bookId" value="@book.Id" />
-                            <button type="submit">Mượn</button>
+                            <button type="submit">Details</button>
                         </form>
                     </td>
-                    <td>
-                        <form asp-action="ReadBook" asp-controller="Book" method="post">
-                            <input type="hidden" name="BookId" value="@book.Id" />
-                            <button type="submit">Đọc</button>
-                        </form>
-                    </td>
-                    <!-- Thêm dữ liệu cho các cột khác nếu cần -->
                 </tr>
             }
         </tbody>
@@ -58,4 +46,44 @@
 else
 {
     <p>Không có sách nào.</p>
-} 
+}  *@
+
+@model IEnumerable<Lib2.Models.Book>
+
+<div class="container">
+    <h2>Book Lists</h2>
+    
+@if (Model.Any())
+{
+    <div class="row">
+        @foreach (var book in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    @* <img src="/home/huylele/CODE/Lib2/Image/1.jpeg" class="card-img-top" alt="Book Image"> *@
+                    <div class="card-body">
+                        <h5 class="card-title">@book.Title</h5>
+                        <p class="card-text">@book.Author</p>
+                        @if(@book.IsBorrowed == 0)
+                        {
+                            <p class="card-text">Available</p>
+                        }
+                        else
+                        {
+                            <p class="card-text">Unavailable</p>
+                        }
+                        <form asp-action="Details" asp-controller="Book" method="post">
+                            <input type="hidden" name="bookId" value="@book.Id" />
+                            <button type="submit">Details</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p>No available book</p>
+}
+</div>

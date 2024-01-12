@@ -1,0 +1,17 @@
+@{
+    ViewBag.Title= "Search";
+}
+<main>
+    <div class="page-section features" style="margin": 150px 0px">
+        <div class="container">
+            <h4>Search Author</h4>
+            <form asp-action="ViewAuthor" asp-controller="Author" >
+                <div class="form-group">
+                    <label for="searchName">Search Author:</label>
+                    <input name="searchName" type="text" class="form-control" id="searchName">
+                </div>
+                <button type="submit" class="btn btn-default">Search</button>
+            </form>
+        </div>
+    </div>
+</main>

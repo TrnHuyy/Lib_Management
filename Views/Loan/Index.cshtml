@@ -1,7 +1,7 @@
 @model List<Lib2.Models.Loan>
 
 @{
-    ViewBag.Title = "List";
+    ViewBag.Title = "Loan History";
 }
 
 <h2>@ViewBag.Title</h2>
@@ -13,9 +13,10 @@
             <tr>
                 <th>ID</th>
                 <th>BookTitle</th>
-                <th>UserName</th>
                 <th>LoanDate</th>
+                <th>ScheduleLoanDate</th>
                 <th>ReturnDate</th>
+                <th>ScheduleReturnDate</th>
                 <!-- Thêm các cột khác nếu cần -->
             </tr>
         </thead>
@@ -25,28 +26,10 @@
                 <tr>
                     <td>@loan.Id</td>
                     <td>@loan.Book.Title</td>
-                    <td>@loan.User.Name</td>
                     <td>@loan.LoanDate</td>
+                    <td>@loan.ScheduleLoanDate</td>
                     <td>@loan.ReturnDate</td>
-                     @* <td>
-                    @if (loan.ReturnDate.HasValue)
-                    {
-                        @loan.ReturnDate.Value
-                    } 
-                    else
-                    {
-                         <form asp-action="UpdateReturnDate" asp-controller="Loan" method="post">
-                            <input type="hidden" name="loanId" value="@loan.Id" />
-                            <button type="submit">Cập Nhật Ngày Trả</button>
-                        </form> 
-                    }
-                </td>
-                 <td>
-                    <form asp-action="DeleteLoan" asp-controller="Loan" method="post">
-                        <input type="hidden" name="loanId" value="@loan.Id" />
-                        <button type="submit">Xóa Mượn</button>
-                    </form>
-                </td>  *@
+                    <td>@loan.ScheduleReturnDate</td>
                     <!-- Hiển thị các thông tin khác của mượn sách -->
                 </tr>
             }

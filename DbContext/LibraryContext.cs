@@ -30,7 +30,9 @@ public class LibraryContext : DbContext
     public DbSet<User> Users { get; set; }
     public DbSet<Notification> Notifications {get; set; }
     public DbSet<Librarian> Librarians {get; set;}
-
+    public DbSet<Favorite> Favorites {get; set;}
+    public DbSet<Comment> Comments {get; set;}
+    public DbSet<Author> Authors {get; set;}
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         // Định nghĩa các quan hệ, ràng buộc, và cấu hình khác ở đây
@@ -49,7 +51,22 @@ public class LibraryContext : DbContext
 
         modelBuilder.Entity<Librarian>().HasKey(n => n.Id);
         modelBuilder.Entity<Librarian>().Property(n => n.Id).ValueGeneratedOnAdd();
+
+        modelBuilder.Entity<Favorite>()
+            .HasKey(ufb => new { ufb.UserId, ufb.BookId });
+        modelBuilder.Entity<Favorite>()
+            .HasOne(ufb => ufb.user)
+            .WithMany(u => u.Favorites)
+            .HasForeignKey(ufb => ufb.UserId);
+        modelBuilder.Entity<Favorite>()
+            .HasOne(ufb => ufb.book)
+            .WithMany(b => b.Favorites)
+            .HasForeignKey(ufb => ufb.BookId);
+
+        modelBuilder.Entity<Comment>().HasKey(b => b.Id);
+        modelBuilder.Entity<Comment>().Property(b => b.Id).ValueGeneratedOnAdd();
+
+        modelBuilder.Entity<Author>().HasKey(a => a.Id);
+        modelBuilder.Entity<Author>().Property(a => a.Id).ValueGeneratedOnAdd();
     }
-
-
 }

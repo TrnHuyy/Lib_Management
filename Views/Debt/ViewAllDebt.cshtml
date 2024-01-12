@@ -1,0 +1,27 @@
+@model List<Lib2.Models.User>
+
+<h2>All Debts</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Debt(VNĐ)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.Id</td>
+                <td>@user.Name</td>
+                <td>@user.Debt</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    <a asp-action="UpdateDebt" asp-controller="Debt">Debt Update</a>
+</div> 

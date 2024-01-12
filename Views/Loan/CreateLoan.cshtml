@@ -1,0 +1,41 @@
+@* <h2>Create Loan</h2>
+
+@using (Html.BeginForm("CreateLoan", "Loan", FormMethod.Post))
+{
+    <div>
+        <label for="selectedDate">Selected Date:</label>
+        <input type="text" id="selectedDate" name="selectedDate" />
+    </div>
+    <script>
+        $(function () {
+            $("#loanDate").datepicker();
+        });
+    </script>
+
+    <button type="submit">Create</button>
+} *@
+
+@model Lib2.Models.CreateLoanViewModel
+
+<h2>Đặt Lịch Mượn Sách</h2>
+
+<form asp-action="CreateLoan" asp-controller="Loan" method="post">
+    <div>
+        <label for="SelectedBookId">Chọn Sách:</label>
+        <select asp-for="SelectedBookId" asp-items="new SelectList(Model.AvailableBooks, nameof(Book.Id), nameof(Book.Title))" required>
+            <option value="">-- Chọn Sách --</option>
+        </select>
+    </div>
+
+    <div>
+        <label for="StartDate">Ngày Bắt Đầu:</label>
+        <input type="datetime-local" asp-for="StartDate" required />
+    </div>
+
+    <div>
+        <label for="EndDate">Ngày Kết Thúc:</label>
+        <input type="datetime-local" asp-for="EndDate" required />
+    </div>
+
+    <button type="submit">Đặt Lịch</button>
+</form>

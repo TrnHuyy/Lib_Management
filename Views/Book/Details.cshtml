@@ -1,0 +1,65 @@
+@model Lib2.Models.BookDetailsViewModel
+
+<h2>Book Details</h2>
+
+<dl>
+    <dt>Title:</dt>
+    <dd>@Model.book.Title</dd>
+
+    <dt>Author:</dt>
+    <dd>@Model.book.Author</dd>
+
+    <dt>Category:</dt>
+    <dd>@Model.book.Category</dd>
+</dl>
+
+<table>
+    <tr>
+        <td>
+            <form asp-action="CreateLoan" asp-controller="Loan" method="get">
+                <input type="hidden" name="bookId" value="@Model.book.Id" />
+                <button type="submit">Borrow</button>
+            </form>
+        </td>
+        <td>
+            <form asp-action="ReadBook" asp-controller="Book" method="post">
+                <input type="hidden" name="BookId" value="@Model.book.Id" />
+                <button type="submit">Read</button>
+            </form>
+        </td>
+        <td>
+            <form asp-action="AddFavoriteBook" asp-controller="Book" method="post">
+                <input type="hidden" name="BookId" value="@Model.book.Id" />
+                <button type="submit">Favorite</button>
+            </form>
+        </td>
+        <td>
+            <form asp-action="Edit" asp-controller="Book" method="post">
+                <input type="hidden" name="bookId" value="@Model.book.Id" />
+                <button type="submit">Edit</button>
+            </form>
+        </td>
+    </tr>
+</table>
+
+<h2>Comments</h2>
+<ul>
+    @foreach (var comment in Model.comments)
+    {
+        <li>
+            @comment.Content
+        </li>
+    }
+</ul>
+
+<h3>Add Comment</h3>
+<form asp-action="AddComments" asp-controller="Book" method="post">
+    <input name="bookId" type="hidden" value="@Model.book.Id"/>
+
+    <div class="form-group">
+        <label for="content">Comment:</label>
+        <input name="content" type="text" class="form-control" id="content">
+    </div>
+
+    <button type="submit" >Add Comment</button>
+</form>

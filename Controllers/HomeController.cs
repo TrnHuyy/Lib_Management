@@ -15,12 +15,14 @@ public class HomeController : Controller
         _logger = logger;
         _context = context;
     }
+    // Hiển thị danh sách các sách
     public IActionResult Index()
     {
         var books = _context.Books.ToList();
         return View(books);
     }
 
+    // Hiển thị ds người dùng
     public IActionResult ViewUsers()
     {
         var isLibrarian = HttpContext.Session.GetInt32("isLibrarian");
@@ -31,10 +33,11 @@ public class HomeController : Controller
         }
         else
         {
-            return RedirectToAction("Error");
+            return BadRequest("You're not Librarian => No Access");
         }
     }
 
+    // Hiển thị ttin cá nhân
     [HttpGet]
     public IActionResult Profile()
     {
@@ -46,7 +49,7 @@ public class HomeController : Controller
         var user = _context.Users.FirstOrDefault(u => u.Id == userId);
         if(user == null)
         {
-            return BadRequest("ko tim thay nguoi dung");
+            return BadRequest("User Not Found");
         }
 
         return View(user);
@@ -70,7 +73,7 @@ public class HomeController : Controller
             var user = _context.Users.FirstOrDefault(u => u.Id == userId);
             user.ChangeName(name);
             _context.SaveChanges();
-            return RedirectToAction("Profile");
+            return RedirectToAction("Profile", "Home");
         }
     }
 
@@ -91,11 +94,27 @@ public class HomeController : Controller
         var user = _context.Users.FirstOrDefault(u => u.Id == userId);
         if(user.Password != oldPass)
         {
-            return BadRequest("Sai mat khau cu");
+            return BadRequest("Old Password Incorrect");
         }
         user.ChangePass(newPass);
         _context.SaveChanges();
         return RedirectToAction("Profile");
+    }
+
+    [HttpGet]
+    public IActionResult Librarian()
+    {
+        var userId = HttpContext.Session.GetInt32("UserId");
+        var isLibrarian = HttpContext.Session.GetInt32("isLibrarian");
+        if(userId == null)
+        {
+            return RedirectToAction("Login", "Resigter");
+        }
+        if(isLibrarian == 0)
+        {
+            return BadRequest("You're not Librarian => No Access");
+        }
+        return View();
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

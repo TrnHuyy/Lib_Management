@@ -1,12 +1,21 @@
+@{
+    ViewData["Title"] = "Favorite Books";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Favorite Books</h1>
+</div> 
+
 @model List<Lib2.Models.Book>
 
-<h2>Search Results</h2>
+<h1>Your Favorites</h1>
 
 @if (Model.Any())
 {
     <table class="table">
         <thead>
             <tr>
+                <th>Id</th>
                 <th>Title</th>
                 <th>Author</th>
                 <th>Category</th>
@@ -18,17 +27,15 @@
             @foreach (var book in Model)
             {
                 <tr>
+                    <td>@book.Id</td>
                     <td>@book.Title</td>
                     <td>@book.Author</td>
                     <td>@book.Category</td>
                     <td>@book.IsBorrowed</td>
-                    <td>
-                        <form asp-action="Details" asp-controller="Book" method="post">
+                    <form asp-action="Details" asp-controller="Book" method="post">
                             <input type="hidden" name="bookId" value="@book.Id" />
                             <button type="submit">Details</button>
-                        </form>
-                    </td>
-                    <!-- Thêm dữ liệu cho các cột khác nếu cần -->
+                    </form>
                 </tr>
             }
         </tbody>
@@ -36,5 +43,5 @@
 }
 else
 {
-    <p>Không có sách nào.</p>
+    <p>No Favorite Book.</p>
 } 

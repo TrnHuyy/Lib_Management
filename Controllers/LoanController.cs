@@ -39,45 +39,36 @@ public class LoanController : Controller
     }
 
     [HttpGet]
-    public IActionResult Create()
+    public IActionResult CreateLoan()
     {
-        return View();
+        var books = _context.Books.ToList();
+        var viewModel = new CreateLoanViewModel {
+            AvailableBooks = books
+        };
+        return View(viewModel);
     }
 
-    // [HttpPost]
-    // public ActionResult Create([FromForm]Loan loan)
-    // {
-    //     if (ModelState.IsValid)
-    //     {
-    //         // Lưu thông tin mượn sách vào cơ sở dữ liệu
-    //         _context.Loans.Add(loan);
-    //         loan.Book.Borrow();
-    //         _context.SaveChanges();
-    //         return RedirectToAction("Index", "Loan"); // Chuyển hướng đến action Index của LoanController sau khi tạo mượn sách thành công
-    //     }
-
-    //     return View(loan);
-    // }
-
+    // Hiển thị form đặt lịch và mượn sách
     [HttpPost]
-    public IActionResult CreateLoan([FromForm]int bookId)
+    public IActionResult CreateLoan(CreateLoanViewModel viewModel)
     {
-        Console.WriteLine("new"+bookId);
         var userId = HttpContext.Session.GetInt32("UserId");
-        var book = _context.Books.FirstOrDefault(b => b.Id == bookId);
+        var book = _context.Books.FirstOrDefault(b => b.Id == viewModel.SelectedBookId);
         if(userId == null)
         {
             return RedirectToAction("Login", "Resigter");
         }
         if(book.IsBorrowed == 1)
         {
-            return BadRequest("sach da duoc muon");
+            return BadRequest("Selected Book Is Borrowed");
         }
         else
         {
-            var loan = new Loan(userId, bookId);
+            var loan = new Loan(userId, viewModel.SelectedBookId);
+            loan.LoanDate = DateTime.Now;
+            loan.ScheduleLoanDate = viewModel.StartDate;
             _context.Loans.Add(loan);
-            var book1 = _context.Books.FirstOrDefault(b => b.Id == bookId);
+            var book1 = _context.Books.FirstOrDefault(b => b.Id == viewModel.SelectedBookId);
             book1.Borrow();
             _context.SaveChanges();
             return RedirectToAction("Index", "Loan");
@@ -101,7 +92,7 @@ public class LoanController : Controller
             return RedirectToAction("ViewAllLoan");
         }
         else{
-            return BadRequest("sach da duoc tra");
+            return BadRequest("Book was returned");
         }
     }
 
@@ -131,7 +122,7 @@ public class LoanController : Controller
         }
         if(isLibrarian == 0)
         {
-            return BadRequest("ko phai thu thu");
+            return BadRequest("You're not Librarian => No Access");
         }
         else{
             var loans = _context.Loans.ToList();

@@ -46,8 +46,8 @@ namespace Lib2
             {
                 var books = new List<Book>()
                 {
-                    new Book("Tri tue do thai", "Eran Katz", "novel" , 0, "~/CODE/Lib2/BookContent/tri-tue-do-thai.txt"),
-                    new Book("Cay cam ngot cua toi", "Jose Mauro De Vasconcelos", "novel" , 0, "~/CODE/Lib2/BookContent/cay-cam-ngot-cua-toi.txt")
+                    new Book("Tri tue do thai", "Eran Katz", "novel" , 0, "/home/huylele/CODE/Lib2/BookContent/tri-tue-do-thai.txt"),
+                    new Book("Cay cam ngot cua toi", "Jose Mauro De Vasconcelos", "novel" , 0, "/home/huylele/CODE/Lib2/BookContent/cay-cam-ngot-cua-toi.txt")
                 };
             context.Books.AddRange(books);
             context.SaveChanges();
@@ -57,14 +57,14 @@ namespace Lib2
                 var users = new List<User>()
                 {
                     new User("Jane","janesmith@gmail.com", "Jane123"),
-                    new User("Alice", "aliceinwonderland@gmail.com", "Alice456")
+                    new User("Alice", "alice@gmail.com", "Alice456")
                 };
                 context.Users.AddRange(users);
                 context.SaveChanges();
             }
             if(context.Librarians.Count() == 0)
             {
-                var librarian = new Librarian("aliceinwonderland@gmail.com","Alice456");
+                var librarian = new Librarian("alice@gmail.com","Alice456");
                 context.Librarians.Add(librarian);
                 context.SaveChanges();
             }

@@ -16,12 +16,52 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = /home/huylele/CODE/Lib2
 build_property._RazorSourceGeneratorDebug = 
 
+[/home/huylele/CODE/Lib2/Views/Author/EditAuthor.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQXV0aG9yL0VkaXRBdXRob3IuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/huylele/CODE/Lib2/Views/Author/SearchAuthor.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQXV0aG9yL1NlYXJjaEF1dGhvci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/huylele/CODE/Lib2/Views/Author/ViewAllAuthor.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQXV0aG9yL1ZpZXdBbGxBdXRob3IuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/huylele/CODE/Lib2/Views/Author/ViewAuthor.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQXV0aG9yL1ZpZXdBdXRob3IuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/huylele/CODE/Lib2/Views/Book/ChangeTitle.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQm9vay9DaGFuZ2VUaXRsZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/huylele/CODE/Lib2/Views/Book/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQm9vay9EZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/huylele/CODE/Lib2/Views/Book/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQm9vay9FZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [/home/huylele/CODE/Lib2/Views/Book/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQm9vay9JbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [/home/huylele/CODE/Lib2/Views/Book/SearchResults.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQm9vay9TZWFyY2hSZXN1bHRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/huylele/CODE/Lib2/Views/Book/ViewFavoriteBook.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQm9vay9WaWV3RmF2b3JpdGVCb29rLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/huylele/CODE/Lib2/Views/Debt/UpdateDebt.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGVidC9VcGRhdGVEZWJ0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/huylele/CODE/Lib2/Views/Debt/ViewAllDebt.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGVidC9WaWV3QWxsRGVidC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [/home/huylele/CODE/Lib2/Views/Home/ChangeName.cshtml]
@@ -36,6 +76,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9JbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[/home/huylele/CODE/Lib2/Views/Home/Librarian.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9MaWJyYXJpYW4uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [/home/huylele/CODE/Lib2/Views/Home/Profile.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9Qcm9maWxlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -44,8 +88,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9WaWV3VXNlcnMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/home/huylele/CODE/Lib2/Views/Loan/Create.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTG9hbi9DcmVhdGUuY3NodG1s
+[/home/huylele/CODE/Lib2/Views/Loan/CreateLoan.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTG9hbi9DcmVhdGVMb2FuLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [/home/huylele/CODE/Lib2/Views/Loan/Index.cshtml]

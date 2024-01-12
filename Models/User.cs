@@ -15,10 +15,12 @@ namespace Lib2.Models
         public string Name { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+        public long Debt {get; set;}
         //public int IsLibrarian {get; set;}
     
         // Danh sách các sách mà người dùng đã mượn
         public ICollection<Loan> Loans { get; set; }
+        public ICollection<Favorite> Favorites {get; set;}
 
         public void ChangeName(string name)
         {

@@ -1,27 +1,35 @@
 @model Lib2.Models.User
 
-<h1>Thông tin cá nhân của bạn</h1>
+<h2>Profile</h2>
 
-<table class="table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Email</th> 
-                <th>Password</th> 
-                <!-- Thêm các cột khác nếu cần -->
-            </tr>
-        </thead>
-        <tbody>
-                <tr>
-                    <td>@Model.Id</td>
-                    <td>@Model.Name</td>
-                    <td>@Model.Email</td>
-                    <td>@Model.Password</td>
-                    <!-- Thêm dữ liệu cho các cột khác nếu cần -->
-                </tr>
-        </tbody>
-    </table>
+<dl>
+    <dt>ID:</dt>
+    <dd>@Model.Id</dd>
+
+    <dt>Name:</dt>
+    <dd>@Model.Name</dd>
+
+    <dt>Email:</dt>
+    <dd>@Model.Email</dd>
+
+    <dt>Password:</dt>
+    <dd>@Model.Password</dd>
+</dl>
+    
 <!-- Nút chỉnh sửa thông tin cá nhân -->
-<a asp-action="ChangeName" asp-controller="Home">Change Name</a>
-<a asp-action="ChangePass" asp-controller="Home">Change Pass</a>
+@* <a asp-action="ChangeName" asp-controller="Home">Change Name</a>
+<a asp-action="ChangePass" asp-controller="Home">Change Pass</a> *@
+<table>
+    <tr>
+        <td>
+            <form asp-action="ChangeName" asp-controller="Home" method="get">
+                <button type="submit">ChangeName</button>
+            </form>
+        </td>
+        <td>
+            <form asp-action="ChangePass" asp-controller="Home" method="get">
+                <button type="submit">ChangePass</button>
+            </form>
+        </td>
+    </tr>
+</table>

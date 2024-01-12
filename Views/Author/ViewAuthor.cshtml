@@ -1,0 +1,28 @@
+@model Lib2.Models.Author
+
+<h2>Author Details</h2>
+
+<dl>
+    <dt>ID:</dt>
+    <dd>@Model.Id</dd>
+
+    <dt>Name:</dt>
+    <dd>@Model.Name</dd>
+
+    <dt>Birthdate:</dt>
+    <dd>@Model.Birthdate</dd>
+
+    <dt>Describe:</dt>
+    <dd>@ViewBag.txtcontent</dd>
+</dl>
+
+<table>
+    <tr>
+        <td>
+            <form asp-action="EditAuthor" asp-controller="Author" method="post">
+                <input type="hidden" name="authorId" value="@Model.Id" />
+                <button type="submit">Edit</button>
+            </form>
+        </td>
+    </tr>
+</table>

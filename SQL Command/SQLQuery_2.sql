@@ -7,8 +7,8 @@ VALUES
 
 INSERT INTO Books(Id, Title, Author, Category, IsBorrowed, Path)
 VALUES
-(1, 'Cay cam ngot cua toi', 'Jose Mauro De Vasconcelos', 'novel' , 1, '~/CODE/Lib2/BookContent/cay-cam-ngot-cua-toi.txt'),
-(2, 'Tri tue do thai', 'Eran Katz', 'novel' , 0, '~/CODE/Lib2/BookContent/tri-tue-do-thai.txt');
+(1, 'Cay cam ngot cua toi', 'Jose Mauro De Vasconcelos', 'novel' , 1, '/home/huylele/CODE/Lib2/BookContent/cay-cam-ngot-cua-toi.txt'),
+(2, 'Tri tue do thai', 'Eran Katz', 'novel' , 0, '/home/huylele/CODE/Lib2/BookContent/tri-tue-do-thai.txt');
 
 INSERT INTO Notifications(Id, Content, CreatedAt)
 VALUES

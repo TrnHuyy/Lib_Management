@@ -30,7 +30,6 @@ public class ResigterController : Controller
         return View();
     }
 
-
     [HttpPost]
     public IActionResult Login(string email, string password)
     {
@@ -74,9 +73,6 @@ public class ResigterController : Controller
     [HttpPost]
     public IActionResult Resign([FromForm]AddUserDto dto)
     {
-        //Console.WriteLine(dto.id+dto.name+dto.email+dto.password);
-        // var users = _context.Users.ToList();
-        // int id = users.Max(user => user.Id);
         var user = new User(dto.name, dto.email, dto.password);
         _context.Users.Add(user);   
         _context.SaveChanges();

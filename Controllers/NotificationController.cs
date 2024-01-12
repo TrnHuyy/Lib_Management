@@ -52,7 +52,7 @@ namespace Lib2.Controllers
             }
             if(isLibrarian == 0)
             {
-               return BadRequest("ko phai thu thu nen ko co quyen tao thong bao");
+               return BadRequest("You're not Librarian => No Access");
             }
             else
             {
